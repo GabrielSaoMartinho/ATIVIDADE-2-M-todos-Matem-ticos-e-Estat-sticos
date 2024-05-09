@@ -1,0 +1,23 @@
+g[x_, y_] := Pi*y^2/Sqrt[x^2 + y^2]
+Plot3D[g[x, y], {x, 0, 1}, {y, 0, 1}]
+
+g[x_, y_] := Pi*y^2/Sqrt[x^2 + y^2]
+IntegralTrap[x_, n_] := 
+ Module[{a = 0, b = 0.9, passo, area}, passo = (b - a)/n; area = 0;
+  For[y = a, y < b, y += passo, 
+   area += (g[x, y] + g[x, y + passo])/2*passo ]; area]
+f[x_] := IntegralTrap[x, 100]
+Plot[f[x], {x, 0, 1}]
+
+f[0.001]
+f[0.5]
+f[1]
+f[2]
+
+Plot[1 - f[x], {x, 0, 1}]
+
+g[x_, y_] := Pi*y^2/Sqrt[x^2 + y^2]
+fNIntegrate[x_] := NIntegrate[g[x, y], {y, 0, 0.9}]
+xValues = {0.001, 0.5, 1, 2};
+nintResults = fNIntegrate[#] & /@ xValues;
+nintResults
